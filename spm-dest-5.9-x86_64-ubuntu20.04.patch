@@ -294,10 +294,11 @@ diff -ruN empty/build-toolchain.sh patched/build-toolchain.sh
 +cp -ac "${UNPACKED_LINUX_TC}/usr/include" \
 +       "${BUILD_DIR}/${CROSS_TOOLCHAIN_NAME}/$xc_tc_name/usr/include"
 +tree "../../../../${linux_sdk_name}/usr/include"
-+ln -s "../../../../${linux_sdk_name}/usr/include/c++/5" \
-+      "${BUILD_DIR}/${CROSS_TOOLCHAIN_NAME}/$xc_tc_name/usr/include/c++/5"
++tree "${BUILD_DIR}/${CROSS_TOOLCHAIN_NAME}/$xc_tc_name/usr/include"
 +ln -s "../include.org/swift" \
 +      "${BUILD_DIR}/${CROSS_TOOLCHAIN_NAME}/$xc_tc_name/usr/include/swift"
++ln -s "../../../../${linux_sdk_name}/usr/include/c++/5" \
++      "${BUILD_DIR}/${CROSS_TOOLCHAIN_NAME}/$xc_tc_name/usr/include/c++/5"
 +
 +echo "  .. Linux Swift libs/mods into target toolchain ..."
 +cp -ac "${UNPACKED_LINUX_TC}/usr/lib/swift" \
