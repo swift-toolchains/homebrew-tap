@@ -1,7 +1,7 @@
 class SpmDest53X8664Ubuntu2004 < Formula
   
   desc "An Ubuntu 20.04 (Xenial) cross compilation toolchain for Swift 5.3.3"
-  homepage "https://github.com/SPMDestinations/homebrew-tap"
+  homepage "https://github.com/swift-toolchains/homebrew-tap"
   url "https://swift.org/builds/swift-5.3.3-release/ubuntu2004/swift-5.3.3-RELEASE/swift-5.3.3-RELEASE-ubuntu20.04.tar.gz"
   # curl -L https://swift.org/builds/swift-5.3.3-release/ubuntu2004/swift-5.3.3-RELEASE/swift-5.3.3-RELEASE-ubuntu20.04.tar.gz | shasum -a 256
   sha256 "e2624f2b56cd63011aa1a185ea3fa9aedf157efe86e6b21b3eacc569a948e75e"
@@ -12,9 +12,9 @@ class SpmDest53X8664Ubuntu2004 < Formula
   
   # the respective things are cloned into the X toolchain, hence only required
   # at build time.
-  depends_on "spmdestinations/tap/swift-xctoolchain-5.3" => [:build]
-  depends_on "spmdestinations/tap/host-lld-bin-8"   => [:build, :recommended]
-  depends_on "spmdestinations/tap/clang-llvm-bin-8" => [:build, :optional]
+  depends_on "swift-toolchains/tap/swift-xctoolchain-5.3" => [:build]
+  depends_on "swift-toolchains/tap/host-lld-bin-8"   => [:build, :recommended]
+  depends_on "swift-toolchains/tap/clang-llvm-bin-8" => [:build, :optional]
 
   patch do
     url "https://helgehess.eu/patches/ubuntu20.04-5.3-2021-02-17-5.patch"

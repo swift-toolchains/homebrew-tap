@@ -1,7 +1,7 @@
 class SpmDest52X8664Ubuntu1604 < Formula
   
   desc "An Ubuntu 16.04 (Xenial) cross compilation toolchain for Swift 5.2.5"
-  homepage "https://github.com/SPMDestinations/homebrew-tap"
+  homepage "https://github.com/swift-toolchains/homebrew-tap"
   url "https://swift.org/builds/swift-5.2.5-release/ubuntu1604/swift-5.2.5-RELEASE/swift-5.2.5-RELEASE-ubuntu16.04.tar.gz"
   sha256 "e5768a597d32f7dc8dfbfde0d7850be36a660860ef1fa38a08041ec09aac1fa9"
   
@@ -11,9 +11,9 @@ class SpmDest52X8664Ubuntu1604 < Formula
   
   # the respective things are cloned into the X toolchain, hence only required
   # at build time.
-  depends_on "spmdestinations/tap/swift-xctoolchain-5.2" => [:build]
-  depends_on "spmdestinations/tap/host-lld-bin-8"   => [:build, :recommended]
-  depends_on "spmdestinations/tap/clang-llvm-bin-8" => [:build, :optional]
+  depends_on "swift-toolchains/tap/swift-xctoolchain-5.2" => [:build]
+  depends_on "swift-toolchains/tap/host-lld-bin-8"   => [:build, :recommended]
+  depends_on "swift-toolchains/tap/clang-llvm-bin-8" => [:build, :optional]
 
   patch do
     url "https://helgehess.eu/patches/ubuntu16.04-5.2-2020-10-16-2.patch"

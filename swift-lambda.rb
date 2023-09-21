@@ -10,8 +10,8 @@ class SwiftLambda < Formula
   version_scheme 1
   revision 3
   
-  depends_on "spmdestinations/tap/spm-dest-5.3-x86_64-amazonlinux2"
-  depends_on "spmdestinations/tap/spm-dest-5.2-x86_64-amazonlinux2" => [:optional]
+  depends_on "swift-toolchains/tap/spm-dest-5.3-x86_64-amazonlinux2"
+  depends_on "swift-toolchains/tap/spm-dest-5.2-x86_64-amazonlinux2" => [:optional]
   depends_on "awscli"
   depends_on "jq"
   
