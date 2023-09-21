@@ -1,4 +1,4 @@
-<h2>SPMDestinations
+<h2>swift-toolchains
   <img src="http://zeezide.com/img/SwiftXcodePkgIcon.svg"
        align="right" width="128" height="128" />
 </h2>
@@ -8,17 +8,7 @@ What is this? It's a set of Homebrew formulas (installation packages) to install
 For example it allows you to build a Swift Package Manager package on macOS,
 but for Ubuntu Linux. Without running anything in Docker.
 
-End of April 2017
-[Johannes Weiß](https://github.com/weissi)
-added
-[custom toolchain support](https://github.com/apple/swift-package-manager/pull/1098)
-to 
-[Swift Package Manager](https://github.com/apple/swift-package-manager).
-Johannes also provided 
-[a script](https://github.com/apple/swift-package-manager/blob/main/Utilities/build_ubuntu_cross_compilation_toolchain)
-which shows how to build an Ubuntu toolchain for x86-64.
-
-SPMDestinations splits up the original script into multiple parts and provides
+swift-toolchains splits up the original script into multiple parts and provides
 the results as Homebrew formulas. This way Homebrew can cache components which
 are reused for different toolchains, and the installation is much easier.
 
@@ -26,7 +16,7 @@ NOTE: The host system requires a Swift 5.3 installation (e.g. Xcode 12).
 
 ## Toolchain Installation
 
-SPMDestinations requires [Homebrew](https://brew.sh),
+swift-toolchains requires [Homebrew](https://brew.sh),
 get it [over here](https://brew.sh).
 
 Currently those cross compilation toolchains are provided:
@@ -41,7 +31,7 @@ Currently those cross compilation toolchains are provided:
 > save space.
 
 ```shell
-brew tap SPMDestinations/tap
+brew tap swift-toolchains/tap
 brew install spm-dest-5.3-x86_64-ubuntu16.04
 ```
 
@@ -60,7 +50,7 @@ or natively in `/opt/homebrew`.
 If using the native one, all is the same, for installation using
 Rosetta:
 ```shell
-arch -x86_64 brew tap SPMDestinations/tap
+arch -x86_64 brew tap swift-toolchains/tap
 arch -x86_64 brew install spm-dest-5.3-x86_64-ubuntu16.04
 ```
 
@@ -115,7 +105,7 @@ This project provides formulas for both.
 > specific Brew directory. The advantage is that Brew does all the caching.
 
 ```shell
-brew tap SPMDestinations/tap
+brew tap swift-toolchains/tap
 brew install host-lld-bin-8 swift-xctoolchain-5.3
 ```
 
@@ -125,7 +115,5 @@ are also provided as formulas via `brew install clang-llvm-bin-8` (BIG!).
 
 ### Who
 
-**SPMDestinations** is brought to you by
-[ZeeZide](http://zeezide.de).
-We like feedback, GitHub stars, cool contract work,
-presumably any form of praise you can think of.
+This repository is forked from **SPMDestinations** by [ZeeZide](http://zeezide.de).
+

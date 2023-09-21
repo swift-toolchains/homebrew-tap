@@ -1,4 +1,5 @@
 .build
+.*.swp
 .fetch
 tmp*
 my-test-app

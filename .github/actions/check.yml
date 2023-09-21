@@ -1,0 +1,25 @@
+name: skip-toolchains ci
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  skip-init:
+    runs-on: macos-13
+    steps:
+      - name: Test compilation
+        run: |
+          brew install swift-toolchains/tap/spm-dest-5.6-x86_64-ubuntu20.04
+          swift package init --type executable --name clidemo
+          swift build \
+              --destination ${HOMEBREW_PREFIX}/lib/swift/dst/x86_64-unknown-linux/swift-5.6-ubuntu20.04.xtoolchain/destination.json \
+              --static-swift-stdlib \
+              -Xswiftc "-static-executable"
+          file .build/x86_64-unknown-linux-gnu/debug/clidemo
+
+
+
