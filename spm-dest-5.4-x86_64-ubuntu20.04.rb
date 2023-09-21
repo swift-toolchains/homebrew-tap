@@ -17,7 +17,7 @@ class SpmDest54X8664Ubuntu2004 < Formula
   depends_on "swift-toolchains/tap/clang-llvm-bin-8" => [:build, :optional]
 
   patch do
-    url "https://helgehess.eu/patches/ubuntu20.04-5.3-2021-02-17-5.patch"
+    url "https://raw.githubusercontent.com/swift-toolchains/homebrew-tap/main/spm-dest-5.4-x86_64-ubuntu20.04.patch"
     sha256 "88e3200a8deed8ea2d5644c3f8f70ea15af78b77f64eaf001411c69106d72f46"
   end
   

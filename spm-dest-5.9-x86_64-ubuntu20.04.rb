@@ -16,10 +16,10 @@ class SpmDest59X8664Ubuntu2004 < Formula
   depends_on "swift-toolchains/tap/host-lld-bin-8"   => [:build, :recommended]
   depends_on "swift-toolchains/tap/clang-llvm-bin-8" => [:build, :optional]
 
-  #patch do
-    #url "https://helgehess.eu/patches/ubuntu20.04-5.6-2022-07-01-1.patch"
-    #sha256 "83e0b7ea4aa7145b681aee0cbf9fc50676970b9305c749596c7e5a1a43796695"
-  #end
+  patch do
+    url "https://raw.githubusercontent.com/swift-toolchains/homebrew-tap/main/spm-dest-5.9-x86_64-ubuntu20.04.patch"
+    sha256 "7242b0a31fdf7c18ea57dcce20315b21a1d4c726071c7162b0833d82dc0094db"
+  end
   
   def install
     ENV.deparallelize
