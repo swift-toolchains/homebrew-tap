@@ -31,8 +31,7 @@ Currently those cross compilation toolchains are provided:
 > save space.
 
 ```shell
-brew tap swift-toolchains/tap
-brew install spm-dest-5.3-x86_64-ubuntu16.04
+brew install swift-toolchains/tap/spm-dest-5.9-x86_64-ubuntu20.04
 ```
 
 This puts the toolchain into:
