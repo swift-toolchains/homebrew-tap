@@ -3,4 +3,4 @@
 .fetch
 tmp*
 my-test-app
-
+.DS_Store
