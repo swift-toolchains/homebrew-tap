@@ -17,6 +17,8 @@ jobs:
           cd clidemo59/
           brew install swift-toolchains/tap/spm-dest-5.9-x86_64-ubuntu20.04
           swift package init --type executable --name clidemo59
+          echo 'import Foundation' >> Sources/main.swift
+          #echo 'import FoundationXML' >> Sources/main.swift
           swift build --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
           ls -la .build/x86_64-unknown-linux-gnu/debug/clidemo59
           file .build/x86_64-unknown-linux-gnu/debug/clidemo59
