@@ -16,6 +16,9 @@ jobs:
           brew install tree
           brew install swift-toolchains/tap/spm-dest-5.9-x86_64-ubuntu20.04
           swift package init --type executable --name clidemo59
+          # the target name is wrong in the build destination script
+          sed -I. 's;"target": "x86_64-unknown-linux";"target": "x86_64-unknown-linux-gnu";g' $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json
+
           swift build \
               --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json \
               --static-swift-stdlib \
