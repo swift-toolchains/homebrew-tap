@@ -17,8 +17,6 @@ jobs:
 
       - name: "Setup package"
         run: |
-          mkdir clidemo59/
-          cd clidemo59/
           swift package init --type executable --name clidemo59
 
       - name: "Build package"
@@ -38,6 +36,16 @@ jobs:
       - name: "Build package w/ Foundation"
         run: |
           echo 'import Foundation' >> Sources/main.swift
+          swift build --verbose --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
+
+      - name: "Build package w/ FoundationXML"
+        run: |
+          echo 'import FoundationXML' >> Sources/main.swift
+          swift build --verbose --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
+
+      - name: "Build package w/ FoundationNetworking"
+        run: |
+          echo 'import FoundationNetworking' >> Sources/main.swift
           swift build --verbose --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
 
       - name: "Check package"
