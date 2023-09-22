@@ -22,15 +22,15 @@ jobs:
           file .build/x86_64-unknown-linux-gnu/debug/clidemo59
           cd -
 
-      - name: "Swift 5.6 Ubuntu 20.04 x86_64 cross-compile"
-        if: false
-        run: |
-          mkdir clidemo56/
-          cd clidemo56/
-          brew install swift-toolchains/tap/spm-dest-5.6-x86_64-ubuntu20.04
-          swift package init --type executable --name clidemo56
-          swift build --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.6-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
-          ls -la .build/x86_64-unknown-linux-gnu/debug/clidemo56
-          file .build/x86_64-unknown-linux-gnu/debug/clidemo56
-          cd -
+      #- name: "Swift 5.6 Ubuntu 20.04 x86_64 cross-compile"
+        #if: false
+        #run: |
+          #mkdir clidemo56/
+          #cd clidemo56/
+          #brew install swift-toolchains/tap/spm-dest-5.6-x86_64-ubuntu20.04
+          #swift package init --type executable --name clidemo56
+          #swift build --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.6-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
+          #ls -la .build/x86_64-unknown-linux-gnu/debug/clidemo56
+          #file .build/x86_64-unknown-linux-gnu/debug/clidemo56
+          #cd -
 
