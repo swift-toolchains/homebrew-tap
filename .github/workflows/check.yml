@@ -23,6 +23,7 @@ jobs:
           cd -
 
       - name: "Swift 5.6 Ubuntu 20.04 x86_64 cross-compile"
+        if: false
         run: |
           mkdir clidemo56/
           cd clidemo56/

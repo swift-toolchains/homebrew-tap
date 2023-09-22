@@ -120,7 +120,7 @@ diff -ruN empty/build-toolchain.sh patched/build-toolchain.sh
 +# brew install swiftxcode/swiftxcode/clang-llvm-bin-8
 +# ./retrieve-sdk-packages.sh
 +HOST_SWIFT_TOOLCHAIN=${SWIFT_LIB_DIR}/xctoolchains/${HOST_PLATFORM}-apple-darwin/${SWIFT_VERSION}-current/swift.xctoolchain
-+HOST_X_LLD=${SWIFT_LIB_DIR}/clang-llvm/${HOST_PLATFORM}-apple-darwin/8.0.0/bin/lld
++HOST_X_LLD=${SWIFT_LIB_DIR}/clang-llvm/${HOST_PLATFORM}-apple-darwin/11.0.0/bin/lld
 +linux_sdk_name="${TARGET_ARCH}-${TARGET_PLATFORM}.sdk"
 +LINUX_SDK="${BUILD_DIR}/${linux_sdk_name}"
 +
