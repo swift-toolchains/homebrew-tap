@@ -1,4 +1,4 @@
-name: skip-toolchains ci
+name: swift-toolchains ci
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  skip-toolchains:
+  swift-toolchains:
     runs-on: macos-13
     steps:
       - name: "Swift 5.9 Ubuntu 20.04 x86_64 cross-compile"
