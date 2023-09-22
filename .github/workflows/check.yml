@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0,6,12,18 * * *'
   workflow_dispatch:
 
 jobs:
@@ -13,13 +13,35 @@ jobs:
     steps:
       - name: "Swift 5.9 Ubuntu 20.04 x86_64 cross-compile"
         run: |
+          brew install swift-toolchains/tap/spm-dest-5.9-x86_64-ubuntu20.04
+
+      - name: "Setup package"
+        run: |
           mkdir clidemo59/
           cd clidemo59/
-          brew install swift-toolchains/tap/spm-dest-5.9-x86_64-ubuntu20.04
           swift package init --type executable --name clidemo59
+
+      - name: "Build package"
+        run: |
+          swift build --verbose --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
+
+      - name: "Build package w/ Glibc"
+        run: |
+          echo 'import Glibc' >> Sources/main.swift
+          swift build --verbose --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
+
+      - name: "Build package w/ _Concurrency"
+        run: |
+          echo 'import _Concurrency' >> Sources/main.swift
+          swift build --verbose --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
+
+      - name: "Build package w/ Foundation"
+        run: |
           echo 'import Foundation' >> Sources/main.swift
-          #echo 'import FoundationXML' >> Sources/main.swift
-          swift build --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
+          swift build --verbose --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
+
+      - name: "Check package"
+        run: |
           ls -la .build/x86_64-unknown-linux-gnu/debug/clidemo59
           file .build/x86_64-unknown-linux-gnu/debug/clidemo59
           cd -
@@ -31,7 +53,7 @@ jobs:
           #cd clidemo56/
           #brew install swift-toolchains/tap/spm-dest-5.6-x86_64-ubuntu20.04
           #swift package init --type executable --name clidemo56
-          #swift build --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.6-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
+          #swift build --verbose --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.6-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
           #ls -la .build/x86_64-unknown-linux-gnu/debug/clidemo56
           #file .build/x86_64-unknown-linux-gnu/debug/clidemo56
           #cd -
