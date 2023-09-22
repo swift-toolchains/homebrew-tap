@@ -18,7 +18,7 @@ class SpmDest59X8664Ubuntu2004 < Formula
 
   patch do
     url "https://raw.githubusercontent.com/swift-toolchains/homebrew-tap/main/spm-dest-5.9-x86_64-ubuntu20.04.patch"
-    sha256 "c164b457ed7f7360bfd8e908f22dbb8895ab28fe2acfd5e573d35a74e3da0fcf"
+    sha256 "e4ce3c1fc0be4847b8141f19d03d9ae671cb990c61c21a141b3d2f808589830e"
   end
   
   def install
