@@ -10,8 +10,7 @@ class ClangLlvmBin8 < Formula
 
   # This patch is for adding the Makefile which does the installation
   patch do
-    url "https://helgehess.eu/patches/clang-llvm-8.0.0-makefile.patch"
-    # curl -L https://helgehess.eu/patches/clang-llvm-8.0.0-makefile.patch | shasum -a 256
+    url "https://raw.githubusercontent.com/swift-toolchains/homebrew-tap/main/clang-llvm-8.0.0-makefile.patch"
     sha256 "7f13437a92ab36113412164107584b46512dca4a08552740d1ac7d1c1ddd3d75"
   end
   

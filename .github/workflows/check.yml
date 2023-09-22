@@ -13,29 +13,23 @@ jobs:
     steps:
       - name: "Swift 5.9 Ubuntu 20.04 x86_64 cross-compile"
         run: |
-          brew install tree
+          mkdir clidemo59/
+          cd clidemo59/
           brew install swift-toolchains/tap/spm-dest-5.9-x86_64-ubuntu20.04
           swift package init --type executable --name clidemo59
-          # the target name is wrong in the build destination script
-          sed -I. 's;"target": "x86_64-unknown-linux";"target": "x86_64-unknown-linux-gnu";g' $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json
-
-          swift build \
-              --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json \
-              --static-swift-stdlib \
-              -Xswiftc "-static-executable" || echo FAILED
-          file .build/x86_64-unknown-linux-gnu/debug/clidemo59 || echo FAILED
+          swift build --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.9-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
+          ls -la .build/x86_64-unknown-linux-gnu/debug/clidemo59
+          file .build/x86_64-unknown-linux-gnu/debug/clidemo59
+          cd -
 
       - name: "Swift 5.6 Ubuntu 20.04 x86_64 cross-compile"
         run: |
-          brew install tree
+          mkdir clidemo56/
+          cd clidemo56/
           brew install swift-toolchains/tap/spm-dest-5.6-x86_64-ubuntu20.04
           swift package init --type executable --name clidemo56
-          # the target name is wrong in the build destination script
-          sed -I. 's;"target": "x86_64-unknown-linux";"target": "x86_64-unknown-linux-gnu";g' $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.6-ubuntu20.04.xtoolchain/destination.json
-
-          swift build \
-              --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.6-ubuntu20.04.xtoolchain/destination.json \
-              --static-swift-stdlib \
-              -Xswiftc "-static-executable"
+          swift build --destination $(brew --prefix)/lib/swift/dst/x86_64-unknown-linux/swift-5.6-ubuntu20.04.xtoolchain/destination.json --static-swift-stdlib -Xswiftc "-static-executable"
+          ls -la .build/x86_64-unknown-linux-gnu/debug/clidemo56
           file .build/x86_64-unknown-linux-gnu/debug/clidemo56
+          cd -
 

@@ -336,7 +336,7 @@ diff -ruN empty/build-toolchain.sh patched/build-toolchain.sh
 +    "version": 1,
 +    "sdk": "${INSTALL_PREFIX}/${CROSS_TOOLCHAIN_NAME}/$linux_sdk_name",
 +    "toolchain-bin-dir": "${INSTALL_PREFIX}/${CROSS_TOOLCHAIN_NAME}/$xc_tc_name/usr/bin",
-+    "target": "x86_64-unknown-linux",
++    "target": "x86_64-unknown-linux-gnu",
 +    "extra-cc-flags": [
 +        "-fPIC"
 +    ],

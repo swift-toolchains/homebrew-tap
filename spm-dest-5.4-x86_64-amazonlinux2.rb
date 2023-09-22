@@ -17,7 +17,7 @@ class SpmDest54X8664Amazonlinux2 < Formula
   depends_on "swift-toolchains/tap/clang-llvm-bin-8" => [:build, :optional]
 
   patch do
-    url "https://helgehess.eu/patches/amazonlinux2-5.3-2020-11-21-9.patch"
+    url "https://raw.githubusercontent.com/swift-toolchains/homebrew-tap/main/amazonlinux2-5.3-2020-11-21-9.patch"
     sha256 "ac317170417c712446a4e02718db960cbad3dc1eb0f8e084ec0ab2e0a7f23632"
   end
   

@@ -1,11 +1,11 @@
 diff -ruN empty/Makefile patched/Makefile
 --- empty/Makefile	1970-01-01 01:00:00.000000000 +0100
-+++ patched/Makefile	2021-02-17 17:17:45.000000000 +0100
-@@ -0,0 +1,85 @@
++++ patched/Makefile	2020-11-21 16:41:57.000000000 +0100
+@@ -0,0 +1,90 @@
 +# Makefile
 +#
 +# Created by Helge Heß
-+# Copyright © 2020-2021 ZeeZide GmbH. All rights reserved.
++# Copyright © 2020 ZeeZide GmbH. All rights reserved.
 +
 +# This script variant expects an unarchived target Swift toolchain in $PWD,
 +# i.e. `usr` (with bin, include, lib, local, share)
@@ -16,14 +16,13 @@ diff -ruN empty/Makefile patched/Makefile
 +# actual location.
 +ACTUAL_DESTINATION_PREFIX=/usr/local
 +
-+MAIN_VERSION=5.3
-+SWIFT_VERSION=$(MAIN_VERSION).3
++SWIFT_VERSION=5.3
 +
 +TARGET_ARCH=x86_64
 +TARGET_TRIPLE=$(TARGET_ARCH)-unknown-linux
 +LINUX_TARGET_TRIPLE=$(TARGET_ARCH)-linux-gnu
-+PLATFORM=ubuntu20.04
-+
++PLATFORM=ubuntu16.04
++	
 +BUILD_DIR=$(PWD)/.build
 +FETCH_DIR=$(PWD)/.fetch
 +
@@ -31,18 +30,24 @@ diff -ruN empty/Makefile patched/Makefile
 +DESTDIR_PREFIX=$(prefix)/$(DESTDIR_RELAPTH)
 +INSTALL_PREFIX=$(ACTUAL_DESTINATION_PREFIX)/$(DESTDIR_RELAPTH)
 +
-+APT_DISTRIBUTION_NAME=focal
++APT_DISTRIBUTION_NAME=xenial
 +APT_PLATFORM=amd64
 +APT_REPOSITORY_URL=http://de.archive.ubuntu.com/ubuntu
 +APT_PACKAGES_FILE_URL=$(APT_REPOSITORY_URL)/dists/$(APT_DISTRIBUTION_NAME)/main/binary-$(APT_PLATFORM)/Packages.gz
 +
-+CROSS_TOOLCHAIN_NAME=swift-$(MAIN_VERSION)-$(PLATFORM).xtoolchain
++CROSS_TOOLCHAIN_NAME=swift-$(SWIFT_VERSION)-$(PLATFORM).xtoolchain
 +
 +# The packages we want in the SDK. Those should be as many as possible, so
 +# that arbitrary software can be built.
 +# (In case that turns out to be an issue, we can always do separate packages
 +#  later).
-+include packagelist.make
++PACKAGE_NAMES = \
++	libc6 libc6-dev linux-libc-dev libicu55 libicu-dev	\
++	libgcc1 libgcc-5-dev libstdc++6 libstdc++-5-dev 	\
++	zlib1g-dev libedit2 libedit-dev 			\
++	libpq5 libpq-dev libsqlite3-dev				\
++	libxml2 libxml2-dev libncurses5 libncurses5-dev		\
++	libcurl4 libcurl4-openssl-dev libssl1.1 libssl-dev
 +
 +MKDIR=mkdir
 +CP=cp
@@ -79,7 +84,7 @@ diff -ruN empty/Makefile patched/Makefile
 +build-toolchain: $(PACKAGE_FETCH_FILE)
 +	BUILD_DIR=$(BUILD_DIR) \
 +	FETCH_DIR=$(FETCH_DIR)	\
-+	SWIFT_VERSION=$(MAIN_VERSION) 			\
++	SWIFT_VERSION=$(SWIFT_VERSION) 			\
 +	TARGET_ARCH=$(TARGET_ARCH)			\
 +	TARGET_PLATFORM=$(PLATFORM)			\
 +	CROSS_TOOLCHAIN_NAME=$(CROSS_TOOLCHAIN_NAME)	\
@@ -89,7 +94,7 @@ diff -ruN empty/Makefile patched/Makefile
 +	./build-toolchain.sh
 diff -ruN empty/build-toolchain.sh patched/build-toolchain.sh
 --- empty/build-toolchain.sh	1970-01-01 01:00:00.000000000 +0100
-+++ patched/build-toolchain.sh	2021-02-17 16:18:19.000000000 +0100
++++ patched/build-toolchain.sh	2020-11-21 16:55:09.000000000 +0100
 @@ -0,0 +1,262 @@
 +#!/bin/bash
 +#
@@ -103,9 +108,9 @@ diff -ruN empty/build-toolchain.sh patched/build-toolchain.sh
 +
 +BUILD_DIR=${BUILD_DIR:=${PWD}/.build}
 +FETCH_DIR=${FETCH_DIR:=${PWD}/.fetch}
-+SWIFT_VERSION=${SWIFT_VERSION:=5.3}
++SWIFT_VERSION=${SWIFT_VERSION:=5.2}
 +TARGET_ARCH=${TARGET_ARCH:=x86_64}
-+TARGET_PLATFORM=${TARGET_PLATFORM:=ubuntu20.04}
++TARGET_PLATFORM=${TARGET_PLATFORM:=ubuntu16.04}
 +CROSS_TOOLCHAIN_NAME=${CROSS_TOOLCHAIN_NAME:=swift-${SWIFT_VERSION}-${TARGET_PLATFORM}.xtoolchain}
 +HOST_PLATFORM=${HOST_PLATFORM:=x86_64}
 +# FIXME: this should not be HOST_PLATFORM but HOST_TOOLCHAIN_BIN (e.g. "fat" instead of x86_64?)
@@ -336,7 +341,7 @@ diff -ruN empty/build-toolchain.sh patched/build-toolchain.sh
 +    "version": 1,
 +    "sdk": "${INSTALL_PREFIX}/${CROSS_TOOLCHAIN_NAME}/$linux_sdk_name",
 +    "toolchain-bin-dir": "${INSTALL_PREFIX}/${CROSS_TOOLCHAIN_NAME}/$xc_tc_name/usr/bin",
-+    "target": "x86_64-unknown-linux-gnu",
++    "target": "x86_64-unknown-linux",
 +    "extra-cc-flags": [
 +        "-fPIC"
 +    ],
@@ -353,29 +358,10 @@ diff -ruN empty/build-toolchain.sh patched/build-toolchain.sh
 +
 +echo "done:"
 +echo "  ${BUILD_DIR}/${CROSS_TOOLCHAIN_NAME}"
-diff -ruN empty/packagelist.make patched/packagelist.make
---- empty/packagelist.make	1970-01-01 01:00:00.000000000 +0100
-+++ patched/packagelist.make	2021-02-17 16:50:11.000000000 +0100
-@@ -0,0 +1,15 @@
-+# Makefile
-+
-+PACKAGE_NAMES = \
-+	libc6-dev linux-libc-dev libicu66 libgcc-9-dev libicu-dev \
-+	libc6 libgcc1 libgcc-s1 libstdc++-9-dev libstdc++6 zlib1g-dev \
-+	libpq5 libpq-dev libedit2 libedit-dev libsqlite3-dev \
-+	libxml2 libxml2-dev libncurses5 libncurses5-dev \
-+	libncurses6 libncurses6-dev \
-+	libcurl4 libcurl4-openssl-dev libssl1.1 libssl-dev \
-+	libuuid1 libpython3-dev libpython3.8 libpython3.8-dev \
-+	liblua5.3-0 liblua5.3-dev \
-+	libpng16-16 libpng-dev libpnglite0 libpnglite-dev \
-+	libtiff5 libtiff-dev libtiff5-dev libuv1 libuv1-dev \
-+	liblz4-1 liblz4-dev \
-+	libpcre2-posix2 libpcre2-dev libpopt0 libpopt-dev
 diff -ruN empty/retrieve-sdk-packages.sh patched/retrieve-sdk-packages.sh
 --- empty/retrieve-sdk-packages.sh	1970-01-01 01:00:00.000000000 +0100
-+++ patched/retrieve-sdk-packages.sh	2021-02-17 16:18:19.000000000 +0100
-@@ -0,0 +1,147 @@
++++ patched/retrieve-sdk-packages.sh	2020-10-16 13:42:25.000000000 +0200
+@@ -0,0 +1,136 @@
 +#!/bin/bash
 +#
 +# Based on
@@ -391,10 +377,10 @@ diff -ruN empty/retrieve-sdk-packages.sh patched/retrieve-sdk-packages.sh
 +FETCH_DIR=${PWD}/.fetch
 +TARGET_ARCH=${TARGET_ARCH:=x86_64}
 +LINUX_TARGET_TRIPLE="${TARGET_ARCH}-linux-gnu"
-+TARGET_PLATFORM=${TARGET_PLATFORM:=ubuntu20.04}
++TARGET_PLATFORM=${TARGET_PLATFORM:=ubuntu16.04}
 +TARGET_SDK_NAME=${TARGET_SDK_NAME:="${TARGET_ARCH}-${TARGET_PLATFORM}.sdk"}
 +APT_REPOSITORY_URL=${APT_REPOSITORY_URL:="http://gb.archive.ubuntu.com/ubuntu"}
-+APT_PACKAGES_FILE_URL=${APT_PACKAGES_FILE_URL:="${APT_REPOSITORY_URL}/dists/focal/main/binary-amd64/Packages.gz"}
++APT_PACKAGES_FILE_URL=${APT_PACKAGES_FILE_URL:="${APT_REPOSITORY_URL}/dists/xenial/main/binary-amd64/Packages.gz"}
 +
 +IFS=', ' read -r -a pkg_names <<< "$1"
 +
@@ -462,34 +448,23 @@ diff -ruN empty/retrieve-sdk-packages.sh patched/retrieve-sdk-packages.sh
 +mkdir -p "${BUILD_DIR}/${TARGET_SDK_NAME}"
 +
 +
-+pkgs=()
 +echo "Fetching download URLs for packages ..."
 +# This is downloading the packages in `pkg_names`,
-+# first ist fetches the packages file.
++# first ist fetchs the packages file.
 +# weissi: Oopsie, this is slow but seemingly fast enough :)
 +while read -r line; do
-+    # Note: REMATCH means Regular Expression Match, not "re-match" ;-)
-+    # Filename: pool/main/g/gcc-10/libgcc-s1_10-20200411-0ubuntu1_amd64.deb
-+    # BASH_REMATCH[0]: whole line
-+    # BASH_REMATCH[1]: pool/main/g/gcc-10/libgcc-s1_10-20200411-0ubuntu1_amd64.deb
-+    # BASH_REMATCH[2]: libgcc-s1
-+    if [[ "$line" =~ ^Filename:\ (.*\/([^/_]+)_.*$) ]]; then
-+        #echo "${BASH_REMATCH[2]}"
-+        for pkg_name in "${pkg_names[@]}"; do
++    for pkg_name in "${pkg_names[@]}"; do
++        if [[ "$line" =~ ^Filename:\ (.*\/([^/_]+)_.*$) ]]; then
++            # echo "${BASH_REMATCH[2]}"
 +            if [[ "${BASH_REMATCH[2]}" == "$pkg_name" ]]; then
 +                new_pkg="$APT_REPOSITORY_URL/${BASH_REMATCH[1]}"
 +                pkgs+=( "$new_pkg" )
 +                echo "- will download $new_pkg"
 +            fi
-+        done
-+    fi
++        fi
++    done
 +done < <(download_stdout "$APT_PACKAGES_FILE_URL" | gunzip -d -c | grep ^Filename:)
 +
-+if [[ -z ${pkgs+x} ]]; then
-+    echo "No packages found?"
-+    echo "Expected: ${pkg_names[@]}"
-+    exit 32
-+fi
 +
 +echo "Download and unpack packages into ${BUILD_DIR}/${TARGET_SDK_NAME} ..."
 +# Loop over the packages we want to fetch, and unpack them
@@ -521,5 +496,5 @@ diff -ruN empty/retrieve-sdk-packages.sh patched/retrieve-sdk-packages.sh
 +done
 +
 +# TBD: 16.04 specific?
-+#ln -s 5 "$TARGET_SDK_NAME/usr/lib/gcc/${LINUX_TARGET_TRIPLE}/5.4.0"
++ln -s 5 "$TARGET_SDK_NAME/usr/lib/gcc/${LINUX_TARGET_TRIPLE}/5.4.0"
 +)
