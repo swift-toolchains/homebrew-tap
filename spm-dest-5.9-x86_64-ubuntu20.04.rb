@@ -13,8 +13,8 @@ class SpmDest59X8664Ubuntu2004 < Formula
   # the respective things are cloned into the X toolchain, hence only required
   # at build time.
   depends_on "swift-toolchains/tap/swift-xctoolchain-5.9" => [:build]
-  depends_on "swift-toolchains/tap/host-lld-bin-11"   => [:build, :recommended]
-  depends_on "swift-toolchains/tap/clang-llvm-bin-11" => [:build, :optional]
+  depends_on "swift-toolchains/tap/host-lld-bin-14"   => [:build, :recommended]
+  depends_on "swift-toolchains/tap/clang-llvm-bin-14" => [:build, :optional]
 
   patch do
     url "https://raw.githubusercontent.com/swift-toolchains/homebrew-tap/main/spm-dest-5.9-x86_64-ubuntu20.04.patch"
